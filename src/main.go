@@ -48,7 +48,7 @@ func main() {
 	}
 
 	a.SendSync(ctx, "PLUGIN_01_FOO", &messages.Init{
-		WASMUrl:            "http://127.0.0.1:3000/wasm/timesTwo/plugin.wasm",
+		WASMUrl:            "http://127.0.0.1:3000/wasm/timesTwoPlugin/plugin.wasm",
 		OutputsJSON:        `["PLUGIN_02_BAR"]`,
 		EnvVars:            "{}",
 		AcceptsEmptyOutput: false,
@@ -61,7 +61,7 @@ func main() {
 	}
 
 	b.SendSync(ctx, "PLUGIN_02_BAR", &messages.Init{
-		WASMUrl:            "http://127.0.0.1:3000/wasm/timesTwo/plugin.wasm",
+		WASMUrl:            "http://127.0.0.1:3000/wasm/timesTwoPlugin/plugin.wasm",
 		OutputsJSON:        `[]`,
 		EnvVars:            "{}",
 		AcceptsEmptyOutput: false,
