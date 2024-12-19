@@ -1,0 +1,29 @@
+syntax = "proto3";
+package proto;
+import "google/protobuf/empty.proto";
+
+option go_package = "bizmate.it/cep/internal/proto";
+
+// go:plugin type=host
+service HostFunctions {
+  // Log a message
+  rpc Logger(Message) returns (google.protobuf.Empty) {}
+}
+
+message Message {
+  string line = 1;
+}
+
+// The plugin service definition.
+// go:plugin type=plugin version=1
+service Plugin {
+  // Handle data
+  rpc Handle(Event) returns (Event) {}
+}
+
+// The event.
+message Event {
+    int32 ts = 1;
+    string serial = 2;
+    float value = 3;
+}

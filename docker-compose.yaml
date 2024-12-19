@@ -1,0 +1,31 @@
+services:
+  node1:
+    image: cep
+    hostname: node1
+    ports:
+      - "50051"
+      - "50052"
+      - "9092"
+      - "3322"
+      - "3320"
+
+  node2:
+    image: cep
+    hostname: node2
+    ports:
+      - "50051"
+      - "50052"
+      - "9092"
+      - "3322"
+      - "3320"
+
+  node3:
+    image: cep
+    hostname: node3
+    ports:
+      - "50051"
+      - "50052"
+      - "9092"
+      - "3322"
+      - "3320"
+
