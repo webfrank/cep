@@ -5,7 +5,7 @@ import (
 	"math/rand"
 	"os"
 	"os/signal"
-	"runtime"
+	"syscall"
 	"time"
 
 	"bizmate.it/cep/internal/actors"
@@ -19,7 +19,7 @@ import (
 func main() {
 	ctx := context.Background()
 
-	logger := log.New(log.InfoLevel, os.Stdout)
+	logger := log.New(log.DebugLevel, os.Stdout)
 
 	// define the discovery options
 	discoConfig := static.Config{
@@ -29,15 +29,15 @@ func main() {
 			"node3:3322",
 		},
 	}
-	// instantiate the dnssd discovery provider
+	// instantiate the static discovery provider
 	disco := static.NewDiscovery(&discoConfig)
 
 	clusterConfig := goakt.
 		NewClusterConfig().
 		WithDiscovery(disco).
 		WithPartitionCount(20).
-		WithMinimumPeersQuorum(2).
-		WithReplicaCount(2).
+		WithMinimumPeersQuorum(1).
+		WithReplicaCount(1).
 		WithDiscoveryPort(3322).
 		WithPeersPort(3320).
 		WithKinds(new(actors.Plugin), new(actors.Source))
@@ -76,22 +76,16 @@ func main() {
 
 	// spawn the actors
 	log.DefaultLogger.Infof("Spawning actors InCluster: %t - %s", actorSystem.InCluster(), actorSystem.Host())
-	actorSystem.Spawn(ctx, "Source", actors.NewSource(), goakt.WithSupervisorStrategies(
-		goakt.NewSupervisorStrategy(goakt.PanicError{}, goakt.NewRestartDirective()),
-		goakt.NewSupervisorStrategy(&runtime.PanicNilError{}, goakt.NewRestartDirective()),
-	))
-	actorSystem.Spawn(ctx, "Plugin-multiply", actors.NewPlugin(), goakt.WithSupervisorStrategies(
-		goakt.NewSupervisorStrategy(goakt.PanicError{}, goakt.NewRestartDirective()),
-		goakt.NewSupervisorStrategy(&runtime.PanicNilError{}, goakt.NewRestartDirective()),
-	))
-	actorSystem.Spawn(ctx, "Plugin-demo", actors.NewPlugin(), goakt.WithSupervisorStrategies(
-		goakt.NewSupervisorStrategy(goakt.PanicError{}, goakt.NewRestartDirective()),
-		goakt.NewSupervisorStrategy(&runtime.PanicNilError{}, goakt.NewRestartDirective()),
-	))
+	actorSystem.Spawn(ctx, "Source", actors.NewSource())
+	actorSystem.Spawn(ctx, "Plugin-multiply", actors.NewPlugin())
+	actorSystem.Spawn(ctx, "Plugin-demo", actors.NewPlugin())
 
 	// wait for ctrl+c and exit
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, os.Interrupt)
+	// signal.Notify(c, os.Kill)
+	signal.Notify(c, syscall.SIGTERM)
+	signal.Notify(c, syscall.SIGINT)
 
 	<-c
 	err = actorSystem.Stop(ctx)
