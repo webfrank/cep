@@ -11,8 +11,9 @@ require (
 require (
 	connectrpc.com/connect v1.17.0 // indirect
 	github.com/RoaringBitmap/roaring v1.9.4 // indirect
+	github.com/Workiva/go-datastructures v1.1.5 // indirect
 	github.com/armon/go-metrics v0.4.1 // indirect
-	github.com/bits-and-blooms/bitset v1.15.0 // indirect
+	github.com/bits-and-blooms/bitset v1.20.0 // indirect
 	github.com/buraksezer/consistent v0.10.0 // indirect
 	github.com/buraksezer/olric v0.5.6-0.20240925183822-6ca0e20256e0 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
@@ -28,7 +29,7 @@ require (
 	github.com/hashicorp/golang-lru v1.0.2 // indirect
 	github.com/hashicorp/logutils v1.0.0 // indirect
 	github.com/hashicorp/memberlist v0.5.1 // indirect
-	github.com/klauspost/cpuid/v2 v2.2.8 // indirect
+	github.com/klauspost/cpuid/v2 v2.2.9 // indirect
 	github.com/miekg/dns v1.1.62 // indirect
 	github.com/mschoch/smat v0.2.0 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
@@ -45,12 +46,12 @@ require (
 	go.uber.org/multierr v1.11.0 // indirect
 	go.uber.org/zap v1.27.0 // indirect
 	golang.org/x/mod v0.22.0 // indirect
-	golang.org/x/net v0.32.0 // indirect
+	golang.org/x/net v0.33.0 // indirect
 	golang.org/x/sync v0.10.0 // indirect
 	golang.org/x/sys v0.28.0 // indirect
 	golang.org/x/text v0.21.0 // indirect
-	golang.org/x/tools v0.27.0 // indirect
+	golang.org/x/tools v0.28.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
 
-require github.com/tochemey/goakt/v2 v2.10.0
+require github.com/tochemey/goakt/v2 v2.10.1

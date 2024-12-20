@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"math/rand"
 	"os"
 	"os/signal"
 	"runtime"
@@ -18,7 +19,7 @@ import (
 func main() {
 	ctx := context.Background()
 
-	logger := log.New(log.DebugLevel, os.Stdout)
+	logger := log.New(log.InfoLevel, os.Stdout)
 
 	// define the discovery options
 	discoConfig := static.Config{
@@ -69,6 +70,9 @@ func main() {
 		panic(err)
 	}
 	global.Loader = p
+
+	// wait for the cluster to be ready
+	time.Sleep(time.Duration(rand.Float32()*5)*time.Second + time.Second)
 
 	// spawn the actors
 	log.DefaultLogger.Infof("Spawning actors InCluster: %t - %s", actorSystem.InCluster(), actorSystem.Host())
